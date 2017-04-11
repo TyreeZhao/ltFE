@@ -4,6 +4,17 @@ const path = require('path'),
 
 const env = process.env.ENV
 
+
+const cssLoaderModule = {
+  loader: 'css-loader',
+  options: {
+    modules: true,
+    sourceMap: false,
+    importLoaders: 1,
+    localIdentName: '[name]__[local]___[hash:base64:5]',
+  },
+}
+
 let webpackConfig = {
 	entry: {
 		src: ['babel-polyfill', path.join(__dirname, 'src/app.js')],
@@ -47,6 +58,22 @@ let webpackConfig = {
 				loader: 'postcss-loader'
 			}]
 		}, {
+        test: /\.(scss|css)$/,
+        include: /src/,
+        use: [
+          'style-loader',
+          cssLoaderModule,
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [
+                path.resolve(path.join(__dirname, 'node_modules')),
+              ],
+            },
+          },
+        ],
+      }, {
           test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           loader: 'file-loader',
           options: {

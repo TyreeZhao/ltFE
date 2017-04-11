@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import styles from './styles.scss'
 
 class Home extends Component {
 	render() {
 		return (
-			<div>Project Demo</div>
+			<div className={styles.home}>T.Zhao FE Starter</div>
 		)
 	}
 }
