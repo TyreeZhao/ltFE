@@ -10,6 +10,7 @@ Auth: T.Zhao
 - [x] [Webpack2](https://webpack.github.io)
 - [x] [React](https://facebook.github.io/react/)
 - [x] [Babel](https://babeljs.io/)
+- [x] [immutable](https://facebook.github.io/immutable-js/)
 
 ## 安装
 
