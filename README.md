@@ -5,7 +5,7 @@
 
 Auth: T.Zhao
 
-## 技术栈
+## 技术栈.
 
 - [x] [Webpack2](https://webpack.github.io)
 - [x] [React](https://facebook.github.io/react/)
