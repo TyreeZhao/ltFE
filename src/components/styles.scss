@@ -5,3 +5,34 @@
   font-size: 30px;
   color: #2e2e2e;
 }
+
+.input {
+  width:65%;
+  margin: auto;
+  height: 60px;
+  border: 2px solid #ffd500;
+  text-align: center;
+  color:black;
+  line-height: 60px;
+  position: relative;
+}
+
+.input::before{
+    content: attr(data-content);
+}
+
+.input::after{
+    content: '';
+    border-right: 2px solid #ffd500;
+    height: 50%;
+    opacity: 1;
+    animation: focus .7s forwards infinite;
+}
+/*闪烁动作*/
+@keyframes focus{
+    from{
+        opacity: 1;
+    }to{
+        opacity: 0;
+    }
+}
