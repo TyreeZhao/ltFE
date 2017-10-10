@@ -1,6 +1,6 @@
 # ltFE
 
-## 技术栈
+## tech
 
 - [x] [Webpack2](https://webpack.github.io)
 - [x] [React](https://facebook.github.io/react/)
@@ -17,20 +17,33 @@
 - [ ] IndexedDB
 - [ ] ServiceWorker
 
-## 安装
+
+## Project structure
+```
+project
+└───src // frontend source code following structure of react/redux
+│   └───actions //
+│   └───reducers // 
+│   └───components // views
+│   └───utils
+└───node_modules // third part framworks
+```
+
+
+## Installing
 
 ```
 $ yarn
 ```
 
-## 开发模式
+## dev
 
 ```
 $ yarn run build:dll # 仅首次运行
 $ yarn run dev
 ```
 
-## 生产模式编译
+## Build process
 
 ```
 $ yarn run build
