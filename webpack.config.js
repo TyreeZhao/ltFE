@@ -15,6 +15,16 @@ console.log(`current NODE_ENV is ${NODE_ENV}`);
 console.log(`current NODE_ENV is ${NODE_ENV}`);
 console.log(`current NODE_ENV is ${NODE_ENV}`);
 
+const cssLoaderModule = {
+  loader: 'css-loader',
+  options: {
+    modules: true,
+    sourceMap: IS_PRODUCTION,
+    importLoaders: 1,
+    localIdentName: '[name]__[local]___[hash:base64:5]',
+  },
+}
+
 let webpackConfig = {
   entry: {
     app: ({
@@ -40,7 +50,7 @@ let webpackConfig = {
     contentBase: path.join(__dirname),
     compress: true,
     historyApiFallback: {
-      index: './app.dev.html'
+      index: './src/app.html'
     },
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -58,58 +68,59 @@ let webpackConfig = {
     development: 'cheap-source-map'
   }[NODE_ENV]),
   module: {
-    rules: [{
-      test: /\.(css)$/,
-      use: [{
-        loader: 'style-loader',
-      }, {
-        loader: 'css-loader',
+    rules: [
+      {
+        test: /\.(scss|css)$/,
+        include: /src/,
+        use: [
+          'style-loader',
+          cssLoaderModule,
+          'postcss-loader',
+        ],
+      },
+      {
+        test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader',
         options: {
-          modules: true,
-          sourceMap: IS_DEVELOPMENT,
-          importLoaders: 1,
-          localIdentName: '[hash:base32:8]'
+          name: 'fonts/[hash].[ext]'
         }
-      }, {
-        loader: 'postcss-loader'
-      }]
-    }, {
-      test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'file-loader',
-      options: {
-        name: 'fonts/[hash].[ext]'
+      },
+      {
+        test: /\.(txt|md)$/,
+        use: 'raw-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(mp3)$/,
+        include: path.join(__dirname, 'src'),
+        exclude: /node_modules/,
+        loader: 'url-loader',
+        options: {
+          limit: 16384,
+          name: 'audio/[hash].[ext]'
+        }
+      },
+      {
+        test: /\.(png|jpg|gif|icon|ico)$/,
+        include: path.join(__dirname, 'src'),
+        exclude: /node_modules/,
+        loader: 'url-loader',
+        options: {
+          limit: 65536,
+          name: 'images/[hash].[ext]'
+        }
+      },
+      {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader',
+      },
+      {
+        test: /\.(js|jsx)$/,
+        include: path.join(__dirname, 'src'),
+        exclude: /node_modules/,
+        loader: 'babel-loader',
       }
-    }, {
-      test: /\.(txt|md)$/,
-      use: 'raw-loader',
-      exclude: /node_modules/,
-    }, {
-      test: /\.(mp3)$/,
-      include: path.join(__dirname, 'src'),
-      exclude: /node_modules/,
-      loader: 'url-loader',
-      options: {
-        limit: 16384,
-        name: 'audio/[hash].[ext]'
-      }
-    }, {
-      test: /\.(png|jpg|gif|icon|ico)$/,
-      include: path.join(__dirname, 'src'),
-      exclude: /node_modules/,
-      loader: 'url-loader',
-      options: {
-        limit: 65536,
-        name: 'images/[hash].[ext]'
-      }
-    }, {
-      test: /\.hbs$/,
-      loader: 'handlebars-loader',
-    }, {
-      test: /\.(js|jsx)$/,
-      include: path.join(__dirname, 'src'),
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-    }],
+    ],
   },
   resolve: {
     alias: {
