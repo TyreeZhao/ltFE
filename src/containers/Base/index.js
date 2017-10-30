@@ -1,22 +1,26 @@
-import React, {PureComponent} from 'react';
+import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
 
 import styles from './styles.css';
 
-class Base extends PureComponent {
+export class Base extends React.Component {
 
-    render() {
-        return (
-            <div className={styles.view}>
-              Base
-              {this.props.children}
-            </div>
-        )
-    }
+  static propTypes = {
+    children: PropTypes.element,
+    fetching: PropTypes.bool,
+  }
+
+  render() {
+    return (
+      <div className={styles.view}>
+        Base
+        {this.props.children}
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => ({
-    global: state.get('global'),
 });
 
 export default connect(mapStateToProps)(Base);

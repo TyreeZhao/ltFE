@@ -1,3 +1,8 @@
+
+::global {
+
+
+}
 html, body {
   line-height: 1.42857143;
   color: black;
@@ -12,6 +17,7 @@ html, body {
 #reactRoot {
   display: block;
   position: absolute;
+  height: 100%;
   top: 0;
   right: 0;
   bottom: 0;
