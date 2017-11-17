@@ -6,7 +6,6 @@
 - [x] [React](https://facebook.github.io/react/)
 - [x] [Redux](https://github.com/reactjs/redux)
 - [x] [Immutable](https://github.com/facebook/immutable-js/)
-- [x] [RxJS](https://github.com/ReactiveX/RxJS)
 - [x] [Babel](https://babeljs.io/)
 - [x] [PostCSS](https://github.com/postcss/postcss)
 - [x] [CSSNext](https://github.com/outpunk/postcss-modules)
