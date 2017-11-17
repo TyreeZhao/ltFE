@@ -2,7 +2,7 @@
 
 ## tech
 
-- [x] [Webpack2](https://webpack.github.io)
+- [x] [Webpack3](https://webpack.github.io)
 - [x] [React](https://facebook.github.io/react/)
 - [x] [Redux](https://github.com/reactjs/redux)
 - [x] [Immutable](https://github.com/facebook/immutable-js/)
