@@ -12,6 +12,7 @@
 - [x] [React Router Redux](https://github.com/reactjs/react-router-redux)
 - [x] [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension)
 - [x] [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
+- [x] [PWA] (https://codelabs.developers.google.com/codelabs/your-first-pwapp/#0)
 - [ ] AppCache
 - [ ] IndexedDB
 - [ ] ServiceWorker

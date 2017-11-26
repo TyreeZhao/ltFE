@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const CompressionPlugin = require("compression-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const {LOCAL_DEV_IP, LOCAL_DEV_PORT, S3_RELEASE_URL} = require('./config');
 const VERSION = require('./package.json').version;
@@ -34,7 +35,7 @@ let webpackConfig = {
     }[NODE_ENV]),
   },
   output: {
-    path: path.join(__dirname, 'release/dist'),
+    path: path.join(__dirname, 'dist'),
     filename: ({
       production: `[name].${VERSION}.[chunkhash:8].dist.js`,
       beta: `[name].beta.${VERSION}.[chunkhash:8].dist.js`,
@@ -137,57 +138,16 @@ let webpackConfig = {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
         'process.env.VERSION': JSON.stringify(VERSION),
-      })
+      }),
+      new CopyWebpackPlugin([{from: 'src/images', to: path.join(__dirname, 'dist/')}])
     ];
 
     if (IS_PRODUCTION || IS_BETA) {
-
-      webpackPlugins.push([
-        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en-gb|en-us/),
-        new webpack.optimize.UglifyJsPlugin({
-          output: {
-            comments: false,
-          },
-          compressor: {
-            sequences: false,     // join consecutive statemets with the “comma operator”
-            properties: false,    // optimize property access: a['foo'] → a.foo
-            dead_code: false,     // discard unreachable code
-            drop_debugger: true,  // discard “debugger” statements
-            unsafe: false,        // some unsafe optimizations (see below)
-            conditionals: true,   // optimize if-s and conditional expressions
-            comparisons: true,    // optimize comparisons
-            evaluate: false,      // evaluate constant expressions
-            booleans: true,       // optimize boolean expressions
-            loops: true,          // optimize loops
-            unused: true,         // drop unused variables/functions
-            hoist_funs: true,     // hoist function declarations
-            hoist_vars: true,     // hoist variable declarations
-            if_return: true,      // optimize if-s followed by return/continue
-            join_vars: true,      // join var declarations
-            cascade: false,       // try to cascade `right` into `left` in sequences
-            side_effects: false,  // drop side-effect-free statements
-            warnings: true,       // warn about potentially dangerous optimizations/code
-            global_defs: {},      // global definitions
-          },
-        }),
-        new webpack.optimize.ModuleConcatenationPlugin(),
-        new CompressionPlugin({
-          asset: "[path].gz[query]",
-          algorithm: "gzip",
-          test: /\.js$|\.html$/,
-          threshold: 10240,
-          minRatio: 0.8
-        }),
-        new webpack.DllReferencePlugin({
-          context: __dirname,
-          manifest: require('./vendorDLL.json'),
-        }),
-      ])
+      webpackPlugins.push(new webpack.optimize.ModuleConcatenationPlugin())
+      webpackPlugins.push(new webpack.optimize.UglifyJsPlugin())
     } else {
-      webpackPlugins.push(
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin()
-      );
+      webpackPlugins.push(new webpack.HotModuleReplacementPlugin())
+      webpackPlugins.push(new webpack.NamedModulesPlugin())
     }
 
     return webpackPlugins;

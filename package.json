@@ -46,10 +46,11 @@
     "webpack-dev-server": "^2.2.1"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
     "classnames": "^2.2.5",
+    "copy-webpack-plugin": "^4.2.3",
     "history": "^4.7.2",
     "immutable": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
     "localforage": "^1.5.0",
     "lodash": "^4.17.4",
     "lodash.debounce": "^4.0.8",
@@ -70,8 +71,8 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server --progress --config webpack.config.js",
-    "build": "yarn run build:dll && NODE_ENV=production webpack --progress --config webpack.config.js",
-    "build:dll": "NODE_ENV=production webpack --progress --config webpack.dll.config.js",
+    "dist": "NODE_ENV=production webpack --config webpack.config.js --progress",
+    "clean": "rm -rf dist",
     "test": "mocha tests/.setup.js tests/**/tests.*.js",
     "eslint": "eslint src/"
   }
