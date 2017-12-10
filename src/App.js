@@ -1,52 +1,32 @@
 import React from 'react'
-// import {render} from 'react-dom'
+import {syncHistoryWithStore} from 'react-router-redux'
 import ReactDOM from 'react-dom'
-import {AppContainer} from 'react-hot-loader'
-import {Provider} from 'react-redux'
-import createHistory from 'history/createBrowserHistory'
-import {Route} from 'react-router'
-import {configureStore} from './stores/configureStore'
-import {ConnectedRouter} from 'react-router-redux'
-import {Map} from 'immutable'
+import configureStore from './redux/configureStore'
+import { useRouterHistory } from 'react-router'
 import makeRoutes from './routes'
 import Root from './containers/Root'
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 import './common/common.css';
 
-// import {
-//   Base,
-//   Home,
-//   Page1,
-//   Page2,
-// } from './containers';
+const initialState = window.__INITIAL_STATE__
 
-const initState = Map({});
-let history = createHistory();
-const store = configureStore(initState, history);
+// Configure history for react-router
+const browserHistory = useRouterHistory(createBrowserHistory)({
+  basename: '',
+})
 
-// const AppRoutes = () => (
-//   <Provider store={store}>
-//     <AppContainer>
-//       <Base>
-//         <ConnectedRouter history={history}>
-//           <div>
-//             <Route exact path="/" component={Home}/>
-//             <Route path="/page1" component={Page1}/>
-//             <Route path="/page2" component={Page2}/>
-//           </div>
-//         </ConnectedRouter>
-//       </Base>
-//     </AppContainer>
-//   </Provider>
-// );
+const store = configureStore(initialState, browserHistory);
+const history = syncHistoryWithStore(browserHistory, store, {
+    selectLocationState: (state) => state.router,
+})
 
-// const $reactRoot = document.getElementById('reactRoot');
 const routes = makeRoutes(store)
 
 const render = () => {
   ReactDOM.render(
-    (<Root history={history} routes={routes} store={store} />),
-    document.getElementById('reactRoot')
+    (<Root history={browserHistory} routes={routes} store={store} />),
+    document.getElementById('react-app')
   )
 }
 
@@ -57,8 +37,3 @@ if (module.hot) {
   })
 }
 render()
-
-//
-// if (module.hot) {
-//   module.hot.accept(AppRoutes, () => render(AppRoutes(), $reactRoot));
-// }

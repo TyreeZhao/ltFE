@@ -1,0 +1,23 @@
+:global {
+
+  html,
+  body {
+    background-color: $snow;
+    font-size: 14px;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  .react-app {
+    height: 100%
+  }
+
+}

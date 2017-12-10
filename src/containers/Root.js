@@ -8,13 +8,13 @@ export default class Root extends React.Component {
     history: PropTypes.object.isRequired,
     routes: PropTypes.element.isRequired,
     store: PropTypes.object.isRequired,
-  }
+  };
 
   get content() {
     return (
-      <ConnectedRouter history={this.props.history}>
+      <Router history={this.props.history}>
         {this.props.routes}
-      </ConnectedRouter>
+      </Router>
     )
   }
 
