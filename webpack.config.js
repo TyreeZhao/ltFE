@@ -34,14 +34,11 @@ let webpackConfig = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: "[name]-[hash].js",
-    publicPath: '/dist/',
+    publicPath: '/',
   },
   devServer: {
-    contentBase: path.join(__dirname),
     compress: true,
-    historyApiFallback: {
-      index: './dist/index.html'
-    },
+    historyApiFallback: true,
     publicPath: '/',
     port: LOCAL_DEV_PORT,
     inline: true

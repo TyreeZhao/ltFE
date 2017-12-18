@@ -14,8 +14,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=dev webpack-dev-server --progress --colors --watch --hot",
-    "dist": "webpack --config webpack.config.js --progress",
+    "dev": "NODE_ENV=dev webpack-dev-server --progress --colors --watch",
+    "dist": "NODE_ENV=dev webpack --config webpack.config.js --progress",
     "clean": "rm -rf dist",
     "test": "mocha tests/.setup.js tests/**/tests.*.js",
     "eslint": "eslint src/"
